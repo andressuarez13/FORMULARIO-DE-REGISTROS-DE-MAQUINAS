@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulario de Registro</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #FFE4E1, #FDF5E6);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 10px; /* Para evitar que pegue contra los bordes en móvil */
+    }
+
+    .container {
+        background: linear-gradient(135deg, #FFFFFF, #FDF5E6);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+        width: 100%;
+        max-width: 400px;
+        box-sizing: border-box;
+    }
+    .nota-legal {
+    font-size: 0.8rem;   /* letra más pequeña */
+    color: #000;         /* blanco para que se lea en el fondo verde */
+    text-align: justify; /* justificado para mejor presentación */
+    margin-top: 15px;
+    line-height: 1.4;    /* espacio entre líneas */
+    }
+    
+        .opciones {
+    display: flex;
+    justify-content: flex-start; /* alinea a la izquierda */
+    gap: 150px;                   /* espacio entre Sí y No */
+    margin-top: 5px;
+    margin-bottom: 15px;
+    color: #000;
+    font-size: 14px;
+        }
+
+
+    .mensaje {
+    font-size: 13px;
+    color: #000;
+    font-style: italic;
+    margin-top: -5px;
+    margin-bottom: 10px;
+}
+
+#firmaCanvas {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background: #000;
+    display: block;
+    margin: 10px center;
+}
+.firma-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra horizontalmente */
+    margin: 15px 0;
+}
+
+#firmaCanvas {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background: #fff;
+    display: block;
+    margin: 0 auto;      /* Fuerza a centrarse */
+    max-width: 100%;     /* Para que no se salga en móviles */
+}
+    
+    #firmaCanvas2 {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background: #fff;
+    display: block;
+    margin: 0 auto;      /* Fuerza a centrarse */
+    max-width: 100%;     /* Para que no se salga en móviles */
+}
+
+.firma-controles {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.firma-controles button {
+    background: #FD9B9B;
+    color: white;
+    border: none;
+    padding: center;
+    margin-top: 5px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.firma-controles button:hover {
+    background: #cc0000;
+}
+    
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #000;
+        word-wrap: break-word;
+        font-size: 1.4rem;
+    }
+
+    label {
+        font-weight: bold;
+        margin-top: 10px;
+        display: block;
+        color: #000;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+
+    button {
+        margin-top: 10px;
+        width: 100%;
+        padding: 12px;
+        background: #2DC0FF;
+        border: none;
+        border-radius: 15px;
+        color: white;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #0056b3;
+    }
+
+    /* 📱 Ajustes para pantallas pequeñas */
+    @media (max-width: 480px) {
+        h2 {
+            font-size: 1.1rem;
+        }
+        input, select, button {
+            font-size: 14px;
+            padding: 10px;
+
+}
+        }
+    
+</style>
+</head>
+<body>
+<div class="container">
+    <h2>FORMATO CONTROL DE USO DE USO DE EQUIPOS E INSTRUMENTOS</h2>
+    <form id="registroForm">
+        <label for="fecha">Fecha de ingreso:</label>
+        <input type="date" id="fecha" name="fecha" required>
+
+        <label for="Numero de documento">Numero de documento :</label>
+        <input type="text" id="Numero de documento" name="Numero de documento" required>
+
+        <label>¿ESTADO DEL EQUIPO FUNCIONAL?</label>
+        <div class="opciones">
+        <label><input type="radio" name="FUNCIONAL" value="Si" required > SI </label>
+        <label><input type="radio" name="FUNCIONAL" value="No" required > NO </label>
+</div>
+    <label for="TIEMPO">TIEMPO DE USO:</label>
+        <input type="text" id="tiempo" name="tiempo" required>
+
+        <label for="RESPONSABLE">RESPONSABLE:</label>
+        <input type="text" id="responsable" name="responsable" required>
+
+    <label for="cargo">CARGO:</label>
+    <select id="cargo" name="cargo" required>
+    <option value="">-- Selecciona --</option>
+    <option value="instructor">Instructor</option>
+    <option value="Emprendedor">Emprendedor</option>
+    <option value="otro">Otro</option>
+    </select>
+<label>FIRMA DEL RESPONSABLE:</label>
+<canvas id="firmaCanvas" width="350" height="100"></canvas>
+<div class="firma-controles">
+    <button type="button" id="limpiarFirma">🧹 Limpiar</button>
+</div>
+<input type="hidden" id="firma" name="firma">
+
+<label for="OBSERVACIONES">OBSERVACIONES:</label>
+        <input type="text" id="OBSERVACIONES" name="OBSERVACIONES" required>
+
+<!--  Nueva casilla -->
+<label>FIRMA DEL TECNICO:</label>
+<canvas id="firmaCanvas2" width="350" height="100"></canvas>
+<div class="firma-controles">
+    <button type="button" id="limpiarFirma2">🧹 Limpiar</button>
+</div>
+<input type="hidden" id="firma2" name="firma2">
+
+        <button type="submit">Guardar</button>
+
+        <!-- Mensaje oculto -->
+<p id="mensajeExito" style="display:none; color: white; background: #2ecc71; padding: 10px; text-align: center; border-radius: 5px; margin-top: 10px;">
+    Formulario enviado correctamente
+</p>
+        
+    </form>
+</div>
+
+<script>
+function inicializarFirma(canvasId, limpiarBtnId, inputId) {
+    const canvas = document.getElementById(canvasId);
+    const ctx = canvas.getContext("2d");
+    const limpiarBtn = document.getElementById(limpiarBtnId);
+    const inputFirma = document.getElementById(inputId);
+
+    let dibujando = false;
+
+    function empezarDibujo(e) {
+        dibujando = true;
+        ctx.beginPath();
+        ctx.moveTo(
+            (e.clientX || e.touches[0].clientX) - canvas.getBoundingClientRect().left,
+            (e.clientY || e.touches[0].clientY) - canvas.getBoundingClientRect().top
+        );
+    }
+
+    function dibujar(e) {
+        if (!dibujando) return;
+        ctx.lineTo(
+            (e.clientX || e.touches[0].clientX) - canvas.getBoundingClientRect().left,
+            (e.clientY || e.touches[0].clientY) - canvas.getBoundingClientRect().top
+        );
+        ctx.stroke();
+    }
+
+    function terminarDibujo() {
+        dibujando = false;
+        inputFirma.value = canvas.toDataURL(); 
+    }
+
+    // Eventos PC
+    canvas.addEventListener("mousedown", empezarDibujo);
+    canvas.addEventListener("mousemove", dibujar);
+    canvas.addEventListener("mouseup", terminarDibujo);
+
+    // Eventos móvil
+    canvas.addEventListener("touchstart", e => { e.preventDefault(); empezarDibujo(e); });
+    canvas.addEventListener("touchmove", e => { e.preventDefault(); dibujar(e); });
+    canvas.addEventListener("touchend", terminarDibujo);
+
+    // Botón limpiar
+    limpiarBtn.addEventListener("click", () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        inputFirma.value = "";
+
+    });
+    
+}
+
+// Inicializar las dos firmas
+inicializarFirma("firmaCanvas", "limpiarFirma", "firma");
+inicializarFirma("firmaCanvas2", "limpiarFirma2", "firma2");
+
+document.getElementById("registroForm").addEventListener("submit", function(e) {
+    e.preventDefault(); 
+    alert("Formulario enviado correctamente");
+});
+
+</script>
+<script>
+document.getElementById("registroForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    // Recolectar los datos del formulario
+    const datos = {
+        fecha: document.getElementById("fecha").value,
+        documento: document.getElementById("Numero de documento").value,
+        funcional: document.querySelector("input[name='FUNCIONAL']:checked")?.value,
+        tiempo: document.getElementById("tiempo").value,
+        responsable: document.getElementById("responsable").value,
+        cargo: document.getElementById("cargo").value,
+        firma: document.getElementById("firma").value,
+        observaciones: document.getElementById("OBSERVACIONES").value,
+        firma2: document.getElementById("firma2").value
+    };
+
+    // Enviar al backend
+    fetch("http://127.0.0.1:5000/guardar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(datos)
+    })
+    .then(res => res.json())
+    .then(res => {
+        alert("" + res.message);
+        document.getElementById("registroForm").reset();
+    })
+    .catch(err => alert("Error: " + err));
+});
+</script>
+
+</body>
+</html>
